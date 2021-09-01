@@ -22,7 +22,6 @@ export default {
     },
     watch: {
         coordinates(newCoordinates) {
-            // console.log(newCoordinates);
             var newLatLng = new L.LatLng(newCoordinates.lat, newCoordinates.lng);
             this.map.panTo(newLatLng);
             this.marker.setLatLng(newLatLng); 
