@@ -56,7 +56,6 @@ export default {
     this.connection = new WebSocket('ws://localhost:3000/')
 
     this.connection.onmessage = (event) => {
-      // console.log(event)
       this.vehicleData = JSON.parse(event.data);
     }
 

@@ -17,6 +17,15 @@ export default {
     data() {
         return {
             map: null,
+            marker: null,
+        }
+    },
+    watch: {
+        coordinates(newCoordinates) {
+            // console.log(newCoordinates);
+            var newLatLng = new L.LatLng(newCoordinates.lat, newCoordinates.lng);
+            this.map.panTo(newLatLng);
+            this.marker.setLatLng(newLatLng); 
         }
     },
     mounted() {
@@ -25,6 +34,19 @@ export default {
         attribution:
             '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.map);
+        var greenIcon = L.icon({
+            iconUrl: require('@/assets/pin-icon.svg'),
+            iconSize: [38, 95],
+            iconAnchor: [22, 94],
+            shadowAnchor: [4, 62],
+            popupAnchor: [-3, -76]
+        });
+        this.marker = L.marker([this.coordinates.lat, this.coordinates.lng], {icon: greenIcon}).addTo(this.map);
+    },
+    beforeMount() {
+        if (this.map) {
+            this.map.remove();
+        }
     }
 }
 
