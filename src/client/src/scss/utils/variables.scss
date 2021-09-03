@@ -1,0 +1,37 @@
+:root {
+
+    //colors
+    --color-white: #FFFFFF;
+    --color-darkgrey: #2c3e50;
+    --color-grey: #333333;
+
+    //typography
+    --base-font-family: Avenir, Helvetica, Arial, sans-serif;
+    --base-font-weight: 400;
+    --light-font-weight: 300;
+    --bold-font-weight: 600;
+  
+    --text-base-size: 1rem;
+    --text-scale-ratio: 1.2;
+
+    --text-lg: calc(var(--text-base-size) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-xl: calc(var(--text-base-size) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    --text-xxl: calc(var(--text-base-size) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * 1.1);
+
+    --space-lg: 2.5rem;
+    --space-sm: 1.5rem;
+
+    .text--xxl {
+        font-size: var(--text-xxl);
+    }
+
+    h1, .text--xxl {
+        font-size: var(--text-xxl);
+        padding: var(--space-lg) 0;
+    }
+    
+    h3, .text--xl {
+        font-size: var(--text-xl);
+        font-weight: var(--base-font-weight);
+    }
+}

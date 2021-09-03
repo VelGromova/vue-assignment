@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="row">
     <h1>Vehicle data</h1>
     <div class="flex-container">
       <div class="map-container">
@@ -10,10 +10,10 @@
         <ProgressBar :label="'State of charge'" :value="vehicleData.soc" :unit="'%'" />
         <div class="indicator-list">
           <div class="indicator-list__item">
-            <span>Energy</span> {{ vehicleData.energy }}
+            <h3>Energy</h3> <span>{{ vehicleData.energy }}</span>
           </div>
           <div class="indicator-list__item">
-            <span>Odometer</span> {{ vehicleData.odo }}
+            <h3>Odometer</h3> <span>{{ vehicleData.odo }}</span>
           </div>
         </div>
       </div>
@@ -67,34 +67,13 @@ export default {
 </script>
 
 <style>
-body {
-  margin: 0;
-}
-
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--base-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #2c3e50;
+  background-color: var(--color-darkgrey);
   min-height: 100vh;
-  color: #fff;
+  color: var(--color-white);
   height: 100%;
-  padding: 30px;
 }
-
-/* TODO remove/refactor css, separate files, vars/root/base styles */
-.map-container {
-  height: 500px;
-  width: 50%;
-}
-
-.flex-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.flex-item {
-  flex-basis: 45%;
-}
-
 </style>

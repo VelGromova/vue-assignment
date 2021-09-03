@@ -1,0 +1,77 @@
+:root {      
+    
+  
+  @include md {
+      :root {
+              --text-base-size: 1.25em;
+              --text-scale-ratio: 1.25;
+      }
+  }
+  
+  body {
+      font-size: var(--text-base-size);
+      font-family: var(--base-font-family);
+      color: var(--color-text);
+  }
+
+  
+  h1 {
+      padding: {
+          top: var(--space-sm);
+          bottom: var(--space-sm);
+      }
+  
+      @include md {
+          padding: {
+              top: var(--space-lg);
+              bottom: var(--space-lg);
+          }
+      }
+  }
+  
+  h3 {
+      padding: {
+          top: var(--space-sm);
+          bottom: var(--space-sm);
+      }
+      @include md {
+          padding: {
+              top: var(--space-lg);
+              bottom: var(--space-sm);
+          }
+      }
+  }
+  
+  /* text size */
+  .text--xxl {
+      font-size: var(--text-xxl);
+  }
+  
+  h1, .text--xxl {
+      font-size: var(--text-xxl);
+  }
+  
+  h3, .text--xl {
+      font-size: var(--text-xl);
+  }
+  
+  h4, .text--md {
+      font-size: var(--text-md);
+  }
+  
+  .text--sm, small, li {
+      font-size: var(--text-base-size);
+  
+      @include md {
+          font-size: 1rem;
+      }
+  }
+  
+  .text--xs {
+      font-size: var(--text-xs);
+  }
+  
+  p {
+      line-height: var(--body-line-height);
+  }
+}

@@ -1,0 +1,22 @@
+.row {
+    width: calc(100% - 1rem);
+    max-width: 1400px;
+    margin: 0 auto;
+  
+    @include md {
+        width: calc(100% - 3rem);
+    }
+
+    &.full-width {
+        width: 100%;
+    }
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+  
+.flex-item {
+    flex-basis: 45%;
+}

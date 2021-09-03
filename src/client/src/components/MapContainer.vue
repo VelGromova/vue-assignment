@@ -50,3 +50,10 @@ export default {
 }
 
 </script>
+
+<style lang="scss">
+    .map-container {
+        height: rem(500);
+        width: 50%;
+    }
+</style>
