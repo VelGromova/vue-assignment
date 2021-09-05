@@ -6,24 +6,23 @@
         <MapContainer :coordinates="parsedCoordinates"/>
       </div>
       <div class="flex-item">
-        <!-- <ProgressBar label="Current speed" :value="currentVehicleData.speed" unit="km/h" /> -->
-        <GaugeChart ref="speedGaugeChart"/>
+        <GaugeChart :scale-data="[90, 130]" :background-colors="['blue', 'red']" unit="km/h" ref="speedGaugeChart"/>
         <ProgressBar label="State of charge" :value="stateOfCharge" unit="%" />
         <div class="indicator-list">
           <div class="indicator-list__item">
-            <h3>Energy</h3> <span>{{ currentVehicleData.energy }}</span>
+            <h3>Energy</h3> <span>{{ currentVehicleEntry.energy }}</span>
           </div>
           <div class="indicator-list__item">
-            <h3>Odometer</h3> <span>{{ currentVehicleData.odo }}</span>
+            <h3>Odometer</h3> <span>{{ currentVehicleEntry.odo }}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="line-chart-container">
-      <LineChart ref="speedLineChart" y-axis-title="Speed (km/h)" x-axis-title="Time" :min="0" :max="130" />
+      <LineChart ref="speedLineChart" y-axis-title="Speed (km/h)" x-axis-title="Time" x-axis-time-unit="second" :min="0" :max="130" />
     </div>
      <div class="line-chart-container">
-      <LineChart ref="socLineChart" y-axis-title="SoC (%)" x-axis-title="Time" :min="0" :max="100" />
+      <LineChart ref="socLineChart" y-axis-title="SoC (%)" x-axis-title="Time" x-axis-time-unit="minute" :min="0" :max="100" />
     </div>
   </div>
 </template>
@@ -46,53 +45,77 @@ export default {
   data() {
     return {
       connection: null,
-      vehicleData: [],
-      currentVehicleData: {
+      realTimeVehicleData: [],
+      currentVehicleEntry: {
         speed: 0,
         soc: 0,
         time: 0,
       },
+      socHistory: [],
+    }
+  },
+
+  watch: {
+    'currentVehicleEntry.soc': function(newSoc, oldSoc) {
+      if (newSoc !== oldSoc) {
+        this.socHistory.push(this.currentVehicleEntry);
+        this.updateSocLineChart();
+      }
     }
   },
 
   computed: {
     parsedCoordinates() {
-      if (this.currentVehicleData.gps) {
-        const [lat, lng] = this.currentVehicleData.gps.split('|').map(parseFloat);
+      const startingPoint = { lat: 52.09126663208008, lng: 5.122183322906494 };
+      if (this.currentVehicleEntry.gps) {
+        const [lat, lng] = this.currentVehicleEntry.gps.split('|').map(parseFloat);
         return {lat, lng};
       }
-      return { lat: 52.09126663208008, lng: 5.122183322906494};
+      return startingPoint;
     },
     stateOfCharge() {
-      return Math.floor(this.currentVehicleData.soc);
+      return Math.floor(this.currentVehicleEntry.soc);
     },
     convertedTime() {
-      return new Date(this.currentVehicleData.time)
+      return new Date(this.currentVehicleEntry.time)
     }
   },
 
   created() {
     this.connection = new WebSocket('ws://localhost:3000/')
+    this.connection.onmessage = this.onVehicleDataEntry;
+  },
 
-    this.connection.onmessage = (event) => {
-      this.currentVehicleData = JSON.parse(event.data);
-      this.vehicleData.push(this.currentVehicleData);
-      this.vehicleData = this.vehicleData.slice(-300);
+  methods: {
+    onVehicleDataEntry(event) {
+      this.currentVehicleEntry = JSON.parse(event.data);
 
-      const speedData = this.vehicleData.slice(-50).map(vehicle => vehicle.speed);
-      const speedTimeData = speedData.map(() => '');
+      // to not overflow the vehicle data array and keep it "real-time"
+      const maxVehicleLength = 100;
+      if (this.realTimeVehicleData.length >= maxVehicleLength) {
+        // shift removes first item, so array always contains max. 300 items
+        this.realTimeVehicleData.shift();
+      }
+      // save vehicle entry
+      this.realTimeVehicleData.push(this.currentVehicleEntry);
 
-      const socData = this.vehicleData.map(vehicle => Math.floor(vehicle.soc));
-      const socTimeData = socData.map(() => '');
-
+      // update charts
+      this.updateSpeedGaugeChart();
+      this.updateSpeedLineChart();
+    },
+    updateSpeedLineChart() {
+      const speedData = this.realTimeVehicleData.map(vehicle => vehicle.speed);
+      const speedTimeData = this.realTimeVehicleData.map(vehicle => new Date(vehicle.time));
       this.$refs.speedLineChart.updateChart(speedTimeData, speedData);
+    },
+    updateSocLineChart() {
+      const socData = this.socHistory.map(vehicle => Math.floor(vehicle.soc));
+      const socTimeData = this.socHistory.map(vehicle => new Date(vehicle.time));
       this.$refs.socLineChart.updateChart(socTimeData, socData);
-      this.$refs.speedGaugeChart.updateChart(this.currentVehicleData.speed);
-    }
-
-    this.connection.onopen = (event) => {
-      console.log(event)
-    }
+    },
+    updateSpeedGaugeChart() {
+      this.$refs.speedGaugeChart.updateValue(this.currentVehicleEntry.speed);
+    },
   },
 }
 </script>

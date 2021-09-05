@@ -6,16 +6,30 @@
 import GaugeChart from 'chartjs-gauge';
 
 export default {
+  props: {
+    scaleData: {
+      type: Array,
+      required: true,
+    },
+    backgroundColors: {
+      type: Array,
+      required: true,
+    },
+    unit: {
+      type: String,
+      required: false,
+    }
+  },
   mounted() {
     this.gaugeChart = new GaugeChart(this.$refs.chartContainer, {
       type: 'gauge',
       data: {
         datasets: [
           {
-            value: 60,
+            value: 0,
             minValue: 0,
-            data: [90, 130],
-            backgroundColor: ['blue', 'red'],
+            data: this.scaleData,
+            backgroundColor: this.backgroundColors,
           },
         ],
       },
@@ -30,7 +44,7 @@ export default {
           display: true,
           fontSize: 18,
           formatter: (value) => {
-            return Math.round(value);
+            return `${Math.round(value)} ${this.unit}`;
           },
           color: 'rgba(255, 255, 255, 1)',
           backgroundColor: 'rgba(0, 0, 0, 1)',
@@ -45,8 +59,8 @@ export default {
   },
 
   methods: {
-    updateChart(value) {
-      this.gaugeChart.data.datasets[0].value = value;
+    updateValue(newValue) {
+      this.gaugeChart.data.datasets[0].value = newValue;
       this.gaugeChart.update();
     },
   },

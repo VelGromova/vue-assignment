@@ -4,6 +4,7 @@
 
 <script>
 import { Chart, registerables } from 'chart.js';
+import 'chartjs-adapter-date-fns';
 Chart.register(...registerables);
 
 export default {
@@ -24,6 +25,10 @@ export default {
             type: Number,
             required: false,
         },
+        xAxisTimeUnit: {
+            type: String,
+            required: false,
+        }
     },
 
     mounted() {
@@ -34,7 +39,6 @@ export default {
                 datasets: [{
                     data: [],
                     pointRadius: 0,
-                    fill: false,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.1
                 }]
@@ -50,6 +54,10 @@ export default {
                 },
                 scales: {
                     x: {
+                        type: this.xAxisTimeUnit ? 'time' : undefined,
+                        time: {
+                            unit: this.xAxisTimeUnit,
+                        },
                         title: {
                             display: true,
                             text: this.xAxisTitle,
