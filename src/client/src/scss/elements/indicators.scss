@@ -1,0 +1,17 @@
+.indicator-list {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+    text-align: center;
+
+    @include lg {
+        justify-content: space-between;
+    }
+
+    span {
+        font: {
+            size: var(--text-lg);
+            weight: var(--bold-font-weight);
+        }
+    }
+}

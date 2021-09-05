@@ -105,7 +105,7 @@ export default {
 <style scoped lang="scss">
 .line-chart-container {
     position: relative;
-    margin-top: var(--space-lg);
+    margin: var(--space-sm) 0;
     width: 100%;
 }
 </style>

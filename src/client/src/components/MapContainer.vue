@@ -39,8 +39,6 @@ export default {
             iconUrl: require('@/assets/pin-icon.svg'),
             iconSize: [38, 95],
             iconAnchor: [22, 94],
-            shadowAnchor: [4, 62],
-            popupAnchor: [-3, -76]
         });
         this.marker = L.marker([this.coordinates.lat, this.coordinates.lng], {icon: greenIcon}).addTo(this.map);
     },

@@ -12,7 +12,7 @@
     --base-font-family: Avenir, Helvetica, Arial, sans-serif;
     --base-font-weight: 400;
     --light-font-weight: 300;
-    --bold-font-weight: 600;
+    --bold-font-weight: 700;
   
     --text-base-size: 1rem;
     --text-scale-ratio: 1.2;
@@ -35,7 +35,7 @@
     
     h3, .text--xl {
         font-size: var(--text-xl);
-        font-weight: var(--base-font-weight);
+        font-weight: var(--light-font-weight);
         margin-bottom: var(--space-sm);
     }
 }
