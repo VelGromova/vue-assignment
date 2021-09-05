@@ -1,12 +1,21 @@
 <template>
-  <canvas ref="chartContainer"></canvas>
+    <div>
+        <h3 class="chart__label">{{ label }}</h3>
+        <div class="chart-container">
+            <canvas ref="chartContainer"></canvas>
+        </div>
+    </div>
 </template>
 
 <script>
-import GaugeChart from 'chartjs-gauge';
+import GaugeChart from "chartjs-gauge";
 
 export default {
   props: {
+    label: {
+        type: String,
+        default: '',
+    },
     scaleData: {
       type: Array,
       required: true,
@@ -18,7 +27,7 @@ export default {
     unit: {
       type: String,
       required: false,
-    }
+    },
   },
   mounted() {
     this.gaugeChart = new GaugeChart(this.$refs.chartContainer, {
@@ -66,3 +75,17 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.chart-container {
+    position: relative;
+    width: 50%;
+    margin: 0 auto var(--space-sm);
+
+    @include lg {
+        width: 75%;
+        margin: 0;
+        margin-bottom: var(--space-lg);
+    }
+}
+</style>

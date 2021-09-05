@@ -2,7 +2,7 @@
     <div class="progress-bar">
         <h3 class="progress-bar__label">{{ label }}</h3>
         <div class="progress-bar__track">
-            <div class="progress-bar__track-value" :style="{'width' : value + '%'}">
+            <div class="progress-bar__track-value" :style="{'width' : value + '%', background: socStyling}">
                 <span>{{ value }} {{ unit }}</span>
             </div>
         </div>
@@ -24,6 +24,18 @@ export default {
             type: String,
             required: true,
         }
+    },
+
+    computed: {
+        socStyling() {
+            if (this.value >= 60) {
+                return 'var(--color-green)';
+            }
+            if (this.value > 20) {
+                return 'var(--color-yellow)';
+            }
+            return 'var(--color-red)';
+        },
     }
 }
 </script>
@@ -41,7 +53,6 @@ export default {
         align-items: center;
         border-radius: rem(40);
         padding: rem(10);
-        margin-top: rem(18);
         height: rem(80);
         background: rgba(255,255,255,0.1);
 
@@ -50,7 +61,6 @@ export default {
             background: var(--color-white);
             height: 100%;
             width: 0;
-            color: var(--color-grey);
 
             span {
                 position: absolute;

@@ -4,6 +4,9 @@
     --color-white: #FFFFFF;
     --color-darkgrey: #2c3e50;
     --color-grey: #333333;
+    --color-green: #00CC00;
+    --color-yellow: #FEDE00;
+    --color-red: #DF362D;
 
     //typography
     --base-font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -33,5 +36,6 @@
     h3, .text--xl {
         font-size: var(--text-xl);
         font-weight: var(--base-font-weight);
+        margin-bottom: var(--space-sm);
     }
 }

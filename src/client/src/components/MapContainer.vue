@@ -1,5 +1,7 @@
 <template>
-  <div id="mapContainer" style="height: 100%" />
+    <div class="map-container">
+        <div id="mapContainer" style="height: 100%" />
+    </div>
 </template>
 
 <script> 
@@ -54,6 +56,11 @@ export default {
 <style lang="scss">
     .map-container {
         height: rem(500);
-        width: 50%;
+        width: 100%;
+        margin-bottom: var(--space-sm);
+
+        @include lg {
+            width: 50%;
+        }
     }
 </style>

@@ -1,23 +1,27 @@
 .row {
-    width: calc(100% - 1rem);
+    width: calc(100% - 3rem);
     max-width: 1400px;
     margin: 0 auto;
   
-    @include md {
-        width: calc(100% - 3rem);
-    }
-
-    &.full-width {
-        width: 100%;
+    @include xs-only {
+        width: calc(100% - 1rem);
     }
 }
 
 .flex-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
+
+    @include lg {
+        justify-content: space-between;
+    }
 }
   
 .flex-item {
-    flex-basis: 45%;
+    flex-basis: 100%;
+
+    @include lg {
+        flex-basis: 45%;
+    }
 }

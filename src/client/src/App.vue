@@ -1,13 +1,17 @@
 <template>
   <div class="row">
     <h1>Vehicle data</h1>
-    <div class="flex-container">
-      <div class="map-container">
-        <MapContainer :coordinates="parsedCoordinates"/>
-      </div>
+    <div class="flex-container"> 
+      <MapContainer :coordinates="parsedCoordinates"/>
       <div class="flex-item">
-        <GaugeChart :scale-data="[90, 130]" :background-colors="['blue', 'red']" unit="km/h" ref="speedGaugeChart"/>
-        <ProgressBar label="State of charge" :value="stateOfCharge" unit="%" />
+        <GaugeChart :scale-data="[90, 130]" 
+                    :background-colors="['blue', 'red']" 
+                    unit="km/h" 
+                    label="Current speed"
+                    ref="speedGaugeChart"/>
+        <ProgressBar label="State of charge" 
+                    :value="stateOfCharge" 
+                    unit="%" />
         <div class="indicator-list">
           <div class="indicator-list__item">
             <h3>Energy</h3> <span>{{ currentVehicleEntry.energy }}</span>
@@ -18,11 +22,13 @@
         </div>
       </div>
     </div>
-    <div class="line-chart-container">
-      <LineChart ref="speedLineChart" y-axis-title="Speed (km/h)" x-axis-title="Time" x-axis-time-unit="second" :min="0" :max="130" />
-    </div>
-     <div class="line-chart-container">
-      <LineChart ref="socLineChart" y-axis-title="SoC (%)" x-axis-title="Time" x-axis-time-unit="minute" :min="0" :max="100" />
+    <div class="flex-container">
+      <div class="flex-item">
+        <LineChart ref="speedLineChart" y-axis-title="Speed (km/h)" x-axis-title="Time" x-axis-time-unit="second" :min="0" :max="130" />
+      </div>
+      <div class="flex-item">
+        <LineChart ref="socLineChart" y-axis-title="SoC (%)" x-axis-title="Time" x-axis-time-unit="minute" :min="0" :max="100" />
+      </div>
     </div>
   </div>
 </template>
@@ -125,9 +131,5 @@ export default {
   font-family: var(--base-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.line-chart-container {
-  margin-top: var(--space-lg);
 }
 </style>

@@ -1,5 +1,7 @@
 <template>
-    <canvas ref="chartContainer"></canvas>
+    <div class="line-chart-container">
+        <canvas ref="chartContainer"></canvas>
+    </div>
 </template>
 
 <script>
@@ -99,3 +101,11 @@ export default {
     },
 }
 </script>
+
+<style scoped lang="scss">
+.line-chart-container {
+    position: relative;
+    margin-top: var(--space-lg);
+    width: 100%;
+}
+</style>
